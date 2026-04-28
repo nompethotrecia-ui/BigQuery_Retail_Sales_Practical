@@ -1,0 +1,80 @@
+SELECT *
+FROM `practical-3-b.practical_retail_sales.Data`
+
+  
+SELECT *
+FROM `practical-3-b.practical_retail_sales.Data`
+WHERE EXTRACT(YEAR FROM DATE(Date)) = 2023;
+
+
+SELECT *
+FROM `practical-3-b.practical_retail_sales.Data`
+WHERE `Total Amount` > (
+SELECT AVG(`Total Amount`)
+FROM `practical-3-b.practical_retail_sales.Data`);
+
+
+SELECT
+  SUM(`Total Amount`) AS Total_Revenue
+FROM `practical-3-b.practical_retail_sales.Data`;
+
+SELECT DISTINCT
+  `Product Category` AS Product_Category
+FROM `practical-3-b.practical_retail_sales.Data`;
+
+
+SELECT
+  `Product Category` AS Product_Category,
+  SUM(Quantity) AS Total_Quantity
+FROM `practical-3-b.practical_retail_sales.Data`
+GROUP BY `Product Category`;
+
+SELECT
+  `Customer ID` AS Customer_ID,
+  Age,
+  CASE
+    WHEN Age < 30 THEN 'Youth'
+    WHEN Age BETWEEN 30 AND 59 THEN 'Adult'
+    ELSE 'Senior'
+  END AS Age_Group
+FROM `practical-3-b.practical_retail_sales.Data`;
+
+
+SELECT
+  Gender,
+  COUNT(
+    CASE
+      WHEN `Total Amount` > 500 THEN 1
+    END
+  ) AS High_Value_Transactions
+FROM `practical-3-b.practical_retail_sales.Data`
+GROUP BY Gender;
+
+
+SELECT
+  `Product Category` AS Product_Category,
+  SUM(`Total Amount`) AS Total_Revenue
+FROM `practical-3-b.practical_retail_sales.Data`
+GROUP BY `Product Category`
+HAVING SUM(`Total Amount`) > 5000;
+
+SELECT
+  `Transaction ID` AS Transaction_ID,
+  `Price per Unit` AS Price_per_Unit,
+  CASE
+    WHEN `Price per Unit` < 50 THEN 'Cheap'
+    WHEN `Price per Unit` BETWEEN 50 AND 200 THEN 'Moderate'
+    ELSE 'Expensive'
+  END AS Unit_Cost_Category
+FROM `practical-3-b.practical_retail_sales.Data`;
+
+SELECT
+  `Customer ID` AS Customer_ID,
+  Age,
+  `Total Amount` AS Total_Amount,
+  CASE
+    WHEN `Total Amount` > 1000 THEN 'High'
+    ELSE 'Low'
+  END AS Spending_Level
+FROM `practical-3-b.practical_retail_sales.Data`
+WHERE Age >= 40;
